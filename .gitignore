@@ -1,0 +1,19 @@
+# Kaggle API key (CRITICAL: Do not push this!)
+kaggle.json
+
+# Datasets
+data/
+*.csv
+*.zip
+
+# Python caches
+__pycache__/
+*.pyc
+
+# LaTeX build files
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
