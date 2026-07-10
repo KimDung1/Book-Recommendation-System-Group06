@@ -1,0 +1,120 @@
+% DS 423 - Group 6 - Project Report
+% Duy Tan University, Da Nang
+% IMPORTANT: This now compiles natively with standard pdfLaTeX on Overleaf!
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc} % For Vietnamese characters
+\usepackage{mathptmx} % Times New Roman equivalent
+\usepackage{geometry}
+\geometry{a4paper, margin=2.5cm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{booktabs}
+\onehalfspacing
+
+\begin{document}
+
+% ---------------- TITLE PAGE ----------------
+\begin{titlepage}
+\centering
+\vspace*{1cm}
+{\Large \textbf{DUY TAN UNIVERSITY}}\\[0.3cm]
+{\large Da Nang}\\[1.5cm]
+{\large DS 423 -- Machine Learning with Large Datasets}\\[2.5cm]
+{\huge \textbf{Book Recommendation System}}\\[1cm]
+{\large \textbf{Group 6 -- Recommendation System}}\\[1.5cm]
+\begin{tabular}{ll}
+\textbf{Member} & \textbf{Student ID} \\
+\hline
+Lê Kim Dũng & 28211452455 \\
+Võ Minh Chính & 28212306297 \\
+\end{tabular}
+\vfill
+{\large \today}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ---------------- ABSTRACT ----------------
+\begin{abstract}
+This project develops a Book Recommendation System using the Goodbooks-10k dataset to assist readers in discovering books tailored to their preferences. The sheer volume of published books makes it challenging for users to find relevant reading material without intelligent assistance. We implemented a hybrid approach combining Collaborative Filtering via Singular Value Decomposition (SVD) and Content-Based Filtering using TF-IDF and Cosine Similarity on book metadata (authors and tags). The Collaborative Filtering model achieved an RMSE of 0.8402 and an MAE of 0.6566, with a Precision@10 of 0.6639 and Recall@10 of 0.7101. Our unified recommendation function successfully outputs a personalized top-10 reading list for users, demonstrating the effectiveness of matrix factorization techniques on sparse rating datasets.
+\end{abstract}
+
+% ---------------- SECTIONS ----------------
+\section{Introduction and Problem Statement}
+The advent of digital publishing and massive online bookstores has made millions of titles accessible to readers worldwide. While this abundance of choice is beneficial, it also introduces the problem of information overload. Readers often struggle to discover new books that align with their personal tastes without spending excessive time searching. To solve this problem, online platforms rely heavily on Recommendation Systems. These systems analyze historical user interactions, such as ratings and reviews, to predict what a user might enjoy reading next. In this project, we address this real-world problem by building a personalized Book Recommendation System. The goal is to process a large dataset of user ratings and book metadata to generate highly relevant top-N book suggestions for individual users.
+
+\section{Dataset}
+The dataset used in this project is \textbf{Goodbooks-10k}, sourced from Kaggle. It contains ten thousand different books and approximately one million user ratings. The dataset is structured across several tables, including:
+\begin{itemize}
+    \item \texttt{books.csv}: Contains metadata such as title, author, publication year, and average rating.
+    \item \texttt{ratings.csv}: Contains the explicit feedback where users rate books on a scale of 1 to 5.
+    \item \texttt{tags.csv} and \texttt{book\_tags.csv}: Contain user-generated tags assigned to various books.
+\end{itemize}
+During the Data Preparation phase, missing values (such as publication years and ISBNs) were imputed, and duplicate ratings were removed. We also merged the tags and authors to create a unified \texttt{content\_features} text column for each book to facilitate content-based similarity search.
+
+\section{Methodology}
+To build a robust recommendation system, we utilized two distinct approaches:
+\subsection{Collaborative Filtering (CF)}
+We implemented Model-Based Collaborative Filtering using \textbf{Singular Value Decomposition (SVD)}. SVD is a matrix factorization technique that decomposes the highly sparse user-item interaction matrix into lower-dimensional latent factor matrices. This allows the model to predict the rating a user would give to an unseen book based on the hidden patterns of users with similar tastes. 
+\subsection{Content-Based Filtering (CBF)}
+To complement CF, we developed a Content-Based Filtering module. This approach leverages the \texttt{content\_features} engineered during data preprocessing. We applied \textbf{Term Frequency-Inverse Document Frequency (TF-IDF)} to convert the text metadata into numerical vectors, and then utilized \textbf{Cosine Similarity} to measure the closeness between books. This enables the system to recommend books that are contextually similar to a title the user already likes (e.g., sharing the same genre tags or authors).
+
+\section{Implementation}
+The implementation is entirely in Python, utilizing standard Data Science libraries.
+\begin{itemize}
+    \item \textbf{Data Preprocessing and EDA:} Implemented in \texttt{Group06\_BookRecommendation\_LeKimDung.ipynb} using \texttt{pandas}, \texttt{numpy}, \texttt{matplotlib}, and \texttt{seaborn}.
+    \item \textbf{Modeling and Evaluation:} Implemented in \texttt{Group06\_BookRecommendation\_VoMinhChinh.ipynb} using the \texttt{scikit-surprise} library for SVD, and \texttt{scikit-learn} for TF-IDF and Cosine Similarity.
+\end{itemize}
+The final unified function \texttt{get\_top\_n\_recommendations\_for\_user} filters out books the user has already rated, predicts the ratings for the remaining catalog using the trained SVD model, and outputs the top 10 highest-scoring recommendations.
+
+\textbf{GitHub / Code Repository Link:} \url{https://github.com/KimDung1/Book-Recommendation-System-Group06}
+
+\section{Results and Evaluation}
+We evaluated the Collaborative Filtering model on a 20\% test split of the ratings data. The evaluation metrics include error metrics (measuring rating prediction accuracy) and ranking metrics (measuring top-K recommendation quality). For Precision and Recall, we defined a relevant item as a book with an actual rating of 3.5 or higher.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lc}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Root Mean Square Error (RMSE) & 0.8402 \\
+Mean Absolute Error (MAE) & 0.6566 \\
+Precision@10 & 0.6639 \\
+Recall@10 & 0.7101 \\
+\bottomrule
+\end{tabular}
+\caption{Evaluation Metrics for SVD Model}
+\end{table}
+
+The RMSE of 0.84 indicates that our model's predicted ratings deviate from actual ratings by less than one star on average, which is highly competitive for the Goodbooks-10k dataset. The Precision@10 indicates that approximately 66\% of the books we recommend in the top-10 list are highly relevant to the user.
+
+\section{Individual Contribution}
+The project was divided equally among the two members:
+\begin{itemize}
+    \item \textbf{Lê Kim Dũng (50\%):} Responsible for Data Collection, Data Cleaning, Exploratory Data Analysis (EDA), and Feature Engineering (creating the sparse matrix and text features).
+    \item \textbf{Võ Minh Chính (50\%):} Responsible for Model Implementation (Collaborative and Content-Based Filtering), System Evaluation (calculating RMSE, MAE, Precision/Recall), and the Top-N recommendation function.
+\end{itemize}
+Both members collaborated on testing the final code and compiling the report and presentation slides.
+
+\section{Conclusion and Future Work}
+We successfully built a Book Recommendation System that effectively suggests books using matrix factorization and metadata similarity. The evaluation metrics prove that SVD is a highly capable algorithm for handling sparse recommendation datasets. 
+For future work, the system could be improved by implementing a true Hybrid model that weights the predictions of both CF and CBF simultaneously. Additionally, deep learning approaches such as Neural Collaborative Filtering (NCF) could be explored to capture non-linear relationships between users and items.
+
+% ---------------- REFERENCES (APA) ----------------
+\begin{thebibliography}{9}
+
+\bibitem{goodbooks} Zygmunt, Z. (2017). \textit{Goodbooks-10k} [Data set]. Kaggle. https://www.kaggle.com/datasets/zygmunt/goodbooks-10k
+
+\bibitem{surprise} Hug, N. (2020). Surprise: A Python library for recommender systems. \textit{Journal of Open Source Software}, 5(52), 2174. https://doi.org/10.21105/joss.02174
+
+\bibitem{sklearn} Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M., \& Duchesnay, É. (2011). Scikit-learn: Machine learning in Python. \textit{Journal of Machine Learning Research}, 12, 2825–2830.
+
+\bibitem{pandas} McKinney, W. (2010). Data structures for statistical computing in Python. In S. van der Walt \& J. Millman (Eds.), \textit{Proceedings of the 9th Python in Science Conference} (pp. 51–56). https://doi.org/10.25080/Majora-92bf1922-00a
+
+\end{thebibliography}
+
+\end{document}
