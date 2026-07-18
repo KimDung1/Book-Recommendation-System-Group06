@@ -25,8 +25,9 @@ This project builds a Book Recommendation System using the **Goodbooks-10k** dat
 - `Group06_BookRecommendation_LeKimDung.ipynb`: The primary notebook for Data Collection, Cleaning, EDA, and Feature Engineering.
 - `Group06_BookRecommendation_VoMinhChinh.ipynb`: The secondary notebook for Modeling (Collaborative and Content-Based), Evaluation, and Hybrid Recommendation.
 - `requirements.txt`: List of all Python dependencies required to run the project.
-- `Data/`: Folder containing the datasets (generated after running the first notebook).
-- `report.tex` / `report_template.tex`: LaTeX files for the final report.
+- `INDIVIDUAL_ASSIGNMENT.docx`: Keep only the unified PageNest Individual Assignment report for Lê Kim Dũng & Võ Minh Chính.
+- `Group06_BookRecommendation_Report.docx`: The Word (.docx) version of the Group Project Report.
+- `Report.pdf` / `report_template.tex`: The compiled PDF and LaTeX files for the Group Project Report.
 
 ## References (APA)
 Please refer to the final cell in the Jupyter Notebook for the compiled list of references in APA format.
