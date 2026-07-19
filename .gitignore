@@ -21,3 +21,6 @@ __pycache__/
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+
+# Individual Assignments
+INDIVIDUAL_ASSIGNMENT.docx

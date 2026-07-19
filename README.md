@@ -25,7 +25,6 @@ This project builds a Book Recommendation System using the **Goodbooks-10k** dat
 - `Group06_BookRecommendation_LeKimDung.ipynb`: The primary notebook for Data Collection, Cleaning, EDA, and Feature Engineering.
 - `Group06_BookRecommendation_VoMinhChinh.ipynb`: The secondary notebook for Modeling (Collaborative and Content-Based), Evaluation, and Hybrid Recommendation.
 - `requirements.txt`: List of all Python dependencies required to run the project.
-- `INDIVIDUAL_ASSIGNMENT.docx`: The individual assignment report for Lê Kim Dũng, focusing on the HireLink Job Recommendation System.
 - `Report.pdf` / `report_template.tex`: The compiled PDF and LaTeX files for the Group Project Report.
 
 ## References (APA)
